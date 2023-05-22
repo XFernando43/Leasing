@@ -1,7 +1,22 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "BonoIdViews";
 }
 
-<h1>BonoIdViews</h1>
+<h1>Editar Bono</h1>
 
+<script src="~/scripts/Bono/EditBono.js"></script>
+<div id="Id_container">@ViewBag.Message</div>
+
+
+<form id="Edit-Form">
+    <div class="border p-3 mt-4">
+    </div>
+    <br />
+    <a id="Actualizar" type="submit" class="btn btn-success" style="width:150px">
+        Update
+    </a>
+    <a id="Delete" type="submit" class="btn btn-danger" style="width:150px">
+        Delete
+    </a>
+   
+</form>

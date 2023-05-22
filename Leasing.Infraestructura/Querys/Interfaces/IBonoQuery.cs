@@ -13,5 +13,8 @@ namespace Leasing.Infraestructura.Querys.Interfaces
         Task CreateBono(BonoRequest request);
         void CreateBono2();
         Task <IEnumerable<Bono>> GetBonos();
+        Task<IEnumerable<Bono>> GetBonoID(int id);
+        Task ActualizarBono(BonoRequest request);
+        Task DeleteBono(int id);
     }
 }

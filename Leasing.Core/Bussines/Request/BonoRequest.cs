@@ -8,6 +8,7 @@ namespace Leasing.Core.Bussines.Request
 {
     public partial class BonoRequest
     {
+        public int PrestamoId { get; set; }
         public string tipo_moneda { get; set; }
         public int monto_total { get; set; }
         public int adelanto { get; set; }

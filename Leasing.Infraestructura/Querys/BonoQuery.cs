@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using Azure.Core;
+using Dapper;
 using Leasing.Core.Bussines.Request;
 using Leasing.Core.Entities;
 using Leasing.Infraestructura.Querys.Interfaces;
@@ -15,6 +16,35 @@ namespace Leasing.Infraestructura.Querys
         {
             ConnectionString = ConfigurationExtensions.GetConnectionString(configuration, "EntitiesConnection");
         }
+
+        public async Task ActualizarBono(BonoRequest request)
+        {
+            try
+            {
+                using var connection = new SqlConnection(ConnectionString);
+                DynamicParameters param = new();
+                param.Add("@id", request.PrestamoId);
+                param.Add("@TipoMoneda", request.tipo_moneda);
+                param.Add("@monto_total", request.monto_total);
+                param.Add("@adelanto", request.adelanto);
+                
+                param.Add("@monto_desembolsado", request.adelanto);
+                param.Add("@tipo_tasa", request.tipo_tasa);
+                param.Add("@tiempo_tasa", request.tiempo_tasa);
+                param.Add("@tasa", request.tasa);
+                
+                param.Add("@periodo_gracia", request.periodo_gracia);
+                param.Add("@tipo_periodo_gracia", request.tipo_periodo_gracia);
+                connection.Query
+                ("SP_UpdateBono", param, commandType: CommandType.StoredProcedure);
+                }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public async Task CreateBono(BonoRequest request)
         {
 
@@ -84,6 +114,31 @@ namespace Leasing.Infraestructura.Querys
             connection.Query
                 ("SP_Create_Bono", param, commandType: CommandType.StoredProcedure);
 
+        }
+
+        public async Task DeleteBono(int id)
+        {
+            try
+            {
+                using var connection = new SqlConnection(ConnectionString);
+                DynamicParameters param = new();
+                param.Add("@id",id);
+                connection.Query
+                ("SP_DeleteBono", param, commandType: CommandType.StoredProcedure);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Bono>> GetBonoID(int id)
+        {
+            using var connection = new SqlConnection(ConnectionString);
+            DynamicParameters parameters = new();
+            parameters.Add("@Id", id);
+            return await connection.QueryAsync<Bono>("SP_GetBonoId",parameters,commandType:CommandType.StoredProcedure);
         }
 
         public async Task<IEnumerable<Bono>> GetBonos()
