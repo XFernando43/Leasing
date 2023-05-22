@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "CreateBonoView";
+}
+
+<script src="~/scripts/Bono/CrearBono.js"></script>
+
+<h1>CreateBonoView</h1>
+
+<div class="form-group mb-4">
+    <label>Tipo Moneda</label>
+    <select class="form-select" id="TipoMoneda">
+        <option> Dolares </option>
+        <option> Soles </option>
+    </select>
+</div>
+
+<div class="form-group mb-4">
+    <label>Monto Total</label>
+    <input type="number" class="form-control" id="Monto_Total" value="850000" placeholder="Ingrese el Monto total">
+</div>
+
+<div class="form-group mb-4">
+    <label>Adelanto</label>
+    <input type="number"  class="form-control" id="Adelanto" value="45000" placeholder="Ingrese el Adelanto">
+</div>
+
+<div class="form-group mb-4">
+    <label>Monto Desembolsado</label>
+    <input type="number" class="form-control" id="Desembolsado" value="25000" placeholder="Ingrese el Monto Desembolsado">
+</div>
+
+<div class="form-group mb-3">
+    <label>Tipo Tasa</label>
+    <select class="form-select" id="TipoTasa">
+        <option> Efectiva </option>
+        <option> No Efectiva </option>
+    </select>
+</div>
+
+<div class="form-group mb-3">
+    <label>Tiempo Tasa</label>
+    <select class="form-select" id="TiempoTasa">
+        <option> Anual </option>
+        <option> Semenestral </option>
+        <option> Mensual </option>
+    </select>
+</div>
+
+<div class="form-group mb-4">
+    <label>Tasa</label>
+    <input type="number" class="form-control" id="Tasa" value="10" placeholder="Ingrese la Tasa">
+</div>
+
+<div class="form-group mb-3">
+    <label>Periodo_Gracia</label>
+    <select class="form-select" id="PeriodoGracia">
+        <option id="3"> Si </option>
+        <option id="4"> No </option>
+    </select>
+</div>
+
+<div class="form-group mb-3">
+    <label>Tipo Periodo Gracia</label>
+    <select class="form-select" id="TipoPeriodoGracia">
+        <option id="5">1</option>
+        <option id="6">2</option>
+    </select>
+</div>
+
+<div class="form-group mb-4">
+    <label>Tiempo Periodo de Gracia</label>
+    <input type="number" class="form-control" id="Tiempo_Periodo_Gracia" value="24" placeholder="Ingrese el Tiempo Periodo de Gracia">
+</div>
+
+<div class="form-group mb-3">
+    <label>Periodo de Pago de Prestamos</label>
+    <select class="form-select" id="PeriodoPagoPrestamo">
+        <option id="1"> Anual </option>
+        <option id="2"> Semenestral </option>
+        <option id="3"> Mensual </option>
+    </select>
+</div>
+
+<div class="form-group mb-4">
+    <label>Tiempo de Prestamo</label>
+    <input type="number" class="form-control" id="Tiempo_Prestamo" value="12" placeholder="Ingrese el Tiempo de Prestamo">
+</div>
+
+<div class="form-group mb-4">
+    <label>Tasa de seguro Degravamen</label>
+    <input type="number" class="form-control" id="Seguro_Degravamen" value="8" placeholder="Ingrese la tasa de seguro degravamen">
+</div>
+
+<div class="form-group mb-4">
+    <label>Tasa de seguro de Inmbueble</label>
+    <input type="number" class="form-control" id="Seguro_Inmbueble" value="5" placeholder="Ingrese la tasa de seguro de Inmueble">
+</div>
+
+
+<a id="ButtonCreate" class="btn btn-success ">Create</a>
+<a id="ButtonTest" class="btn btn-danger ">Test</a>
