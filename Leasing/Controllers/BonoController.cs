@@ -31,6 +31,9 @@ namespace Leasing.Controllers
             ViewBag.Message = id;
             return View();
         }
+        public IActionResult LeasingTableResultView() { 
+            return View(); 
+        }
 
         /// endPoints
         [Route("CreateBono5555")]

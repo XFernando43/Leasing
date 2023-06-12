@@ -15,7 +15,8 @@ namespace Leasing.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            //return View();
+            return RedirectToAction("LoginView", "Login");
         }
 
         public IActionResult Privacy()
