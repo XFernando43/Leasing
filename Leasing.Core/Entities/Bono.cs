@@ -1,30 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Leasing.Core.Entities
+﻿namespace Leasing.Core.Entities
 {
     public partial class Bono
     {
-        public int IdPrestamo { get; set; }
-        public string tipo_moneda { get; set; }
-        public string monto_total { get; set; }
-        public int Adelanto { get; set; }
-        public int monto_Desembolsado { get; set; }
-        public string tipo_tasa { get; set; }
-        public string tiempo_Tasa { get; set; }
-        public float tasa { get; set; }
-        public string periodo_gracia { get; set; }
-        public int tipo_periodo_gracia { get; set; }
-        public int? tiempo_periodo_gracia { get; set; }
-        public string periodo_pago_prestamo { get; set; }
-        public int tiempo_prestamo { get; set; }
-        public float tasa_seguro_degravamen { get; set; }
-        public int tasa_seguro_inmueble { get; set; }
-        public int ID_Arrendatario { get; set; }
-        public int ID_Entidad { get; set; }
+        public int ID { get; set; }
+        public float PrecioVentaActivo { get; set; }
+        public float CuotaInicial { get; set; }
+        public float N_Anios { get; set; }
+        public float Frecuencia_Pago { get; set; }
+        public float N_Dias_Anios { get; set; }
+        public float Costos_Notariales { get; set; }
+        public float Costes_Registrales { get; set; }
+        public float Tasacion { get; set; }
+        public float Comision_Estudio { get; set; }
+        public float Comision_Activacion { get; set; }
+        public float Comision_Periodo { get; set; }
+        public float portes { get; set; }
+        public float Gastos_Administracion { get; set; }
+        public float Seguro_Degravament { get; set; }
+        public float Seguro_Riesgo { get; set; }
+        public float Tasa_Descuento { get; set; }
+        public int User_ID { get; set; }
 
     }
 }

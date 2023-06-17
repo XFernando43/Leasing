@@ -3,5 +3,95 @@
     ViewData["Title"] = "LeasingTableResultView";
 }
 
+<div id="id_box" hidden>@ViewBag.Message </div>
+<script src="~/scripts/Bono/LeasingBonoResult.js"></script>
+
 <h1>LeasingTableResultView</h1>
 
+<br />
+<br />
+
+<table class="table table-bordered table-striped" style="width:100%" id="Leasing-Table">
+    <thead>
+        <tr>
+            <th>N</th>
+            <th>TEA</th>
+            <th>TEMP</th>
+            <th>IA</th>
+            <th>IP</th>
+            <th>P.G</th>
+            <th>Saldo Inicial</th>
+            <th>Saldo Inicial Indexado</th>
+            <th>Interes</th>
+            <th>Cuota</th>
+            <th>Amort</th>
+            <th>Prepago</th>
+            <th>Seguro Degravament</th>
+            <th>Seguro de riesgo</th>
+            <th>Comision</th>
+            <th>Portes</th>
+            <th>Gas Admin</th>
+            <th>Saldo Final</th>
+            <th>Flujo</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<a class="btn btn-success" id="btn-note1">TRY</a>
+<a class="btn btn-success" id="btn2">TRY2</a>
+
+<br />
+<br />
+
+<html>
+<head>
+    <title>Tarjeta con Gráfico</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Gráfico de Ejemplo</h5>
+                <canvas id="chart"></canvas>
+            </div>
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Obtén el contexto del lienzo (canvas)
+        var ctx = document.getElementById('chart').getContext('2d');
+
+        // Crea el gráfico
+        var myChart = new Chart(ctx, {
+            type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
+            data: {
+                labels: ['Etiqueta 1', 'Etiqueta 2', 'Etiqueta 3', 'Etiqueta 4', 'Etiqueta 5'],
+                datasets: [{
+                    label: 'Datos de ejemplo',
+                    data: [12, 19, 3, 5, 2], // Datos para el gráfico
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Color de fondo de las barras
+                    borderColor: 'rgba(75, 192, 192, 1)', // Color del borde de las barras
+                    borderWidth: 1 // Ancho del borde de las barras
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
+<br />
+<br />

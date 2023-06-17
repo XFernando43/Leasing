@@ -1,23 +1,28 @@
-﻿@{ViewData["Title"] = "TablaBonoViews";}
+﻿@{
+    ViewData["Title"] = "TablaBonoViews";
+}
 
-<script src="~/scripts/Bono/GetBonos.js"></script>
+<script src="~/scripts/Bono/TablaBonos.js"></script>
 
 <br />
-<br />
 
+<a class="btn btn-success" id="btn-agregar">Agregar</a>
+<br />
+<br />
 <table class="table table-bordered table-striped" style="width:100%" id="table-Bonos">
     <thead>
         <tr>
             <th>Acciones</th>
-            <th>Id Prestamo</th>
-            <th>Tipo Moneda</th>
-            <th>Monto Total</th>
-            <th>Adelanto</th>
-            <th>Monto Desembolsado</th>
-            <th>Tipo de Tasa</th>
-            <th>Tiempo Tasa</th>
-            <th>Tasa</th>
+            <th>Id</th>
+            <th>Precio de Venta</th>
+            <th>N Años</th>
+            <th>Frecuencia Pago</th>
+            <th>N de dias por año</th>
+            <th>Costes Notariales</th>
+            <th>Costes Registrales</th>
+
         </tr>
     </thead>
     <tbody></tbody>
 </table>
+
