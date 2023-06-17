@@ -196,6 +196,22 @@ namespace Leasing.Infraestructura.Querys
                 ("Sp_CreateLeasingNote1", param, commandType: CommandType.StoredProcedure);
 
         }
+
+        public float PAGO(float tasa, float nper, float va, float vf = 0.0f, float tipo = 0.0f)
+        {
+            float resultado = 0.0f;
+            if (tasa != 0)
+            {
+                double tmp = Math.Pow(1 + tasa, nper);
+                resultado = (float)(-((tasa * (vf + (tmp * va))) / ((-1 + tmp) * (1 + tasa * tipo))));
+            }
+            else if (nper != 0)
+            {
+                resultado = (float)(-(vf + va) / nper);
+            }
+            return resultado;
+        }
+
         public async Task<IEnumerable<LeasingTable>> LeasingTable(Bono bono)
         {
 
@@ -270,7 +286,9 @@ namespace Leasing.Infraestructura.Querys
                 // INTERES
                 if (i <= note1.N_Total_de_Cuotas)
                 {
-                    interes = saldoInicialIndexado * tem;
+                    //Console.Clear();
+                    Console.WriteLine("SaldoInicial: " + saldoInicialIndexado + "  Tem: " + tem);
+                    interes = saldoInicialIndexado * (float)(tem*0.01);
                 }
                 // COUTA
                 if (i <= note1.N_Total_de_Cuotas)
@@ -279,7 +297,8 @@ namespace Leasing.Infraestructura.Querys
                     else if(pg == 'P') { cuota_inc = 0; }
                     else
                     {
-
+                        cuota_inc =
+                           PAGO(tem + note1.Por_Seguro_desgrav,note1.N_Total_de_Cuotas - saldoInicialIndexado + 1,saldoInicialIndexado,0,0);
                     }
 
                 } else { cuota_inc = 0; }
