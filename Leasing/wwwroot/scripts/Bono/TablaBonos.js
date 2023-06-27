@@ -16,20 +16,23 @@
                             var body = "<tr>";
 
                             //aciones 
-                            body += "<td>" + '<div onclick="ButtonRedirigir(' + data.id + ');" class="btn btn-dark" id="btn_edit"><i id="icon" class="bi bi-pen-fill"></i></div>' +
-                                '<span style="margin-right: 10px;"></span>' +
-                                '<div onclick="ButtonRedirigirTablaLeasing(' + data.id + ');" class="btn btn-danger" id="btn_edit"><i id="icon" class="bi bi-bank2"></i></div>' + "</td>";
+                            body += "<td class='d-flex justify-content-center'>"
+                                + '<div onclick="ButtonRedirigir(' + data.id + ');" class="btn btn-dark" id="btn_edit"><i id="icon" class="bi bi-pen-fill"></i></div>'
+                                + '<span style="margin-right: 10px;"></span>'
+                                + '<div onclick="ButtonRedirigirTablaLeasing(' + data.id + ');" class="btn btn-danger" id="btn_edit"><i id="icon" class="bi bi-bank2"></i></div>'
+                                + "</td>";
+
                             body += '<td class="mb-auto text-center">' + data.id + '</td>';
                             body += '<td class="mb-auto text-center">' + data.precioVentaActivo + '</td>';
+                            body += '<td class="mb-auto text-center">' + data.cuotaInicial + '</td>';
                             body += '<td class="mb-auto text-center">' + data.n_Anios + '</td>';
                             body += '<td class="mb-auto text-center">' + data.frecuencia_Pago + '</td>';
-                            body += '<td class="mb-auto text-center">' + data.n_Dias_Anios + '</td>';
-                            body += '<td class="mb-auto text-center">' + data.costos_Notariales + '</td>';
-                            body += '<td class="mb-auto text-center">' + data.costes_Registrales + '</td>';
+                            body += '<td class="mb-auto text-center">' + data.tasa_Descuento + '</td>'; 
                             
                             body += "</tr>";
                             $("#table-Bonos tbody").append(body);
                         });
+                        var table = $("#table-Bonos").DataTable({ fixedColumns: true, responsive: true });
                     },
                     error: function () {
                         alert('Fail!');

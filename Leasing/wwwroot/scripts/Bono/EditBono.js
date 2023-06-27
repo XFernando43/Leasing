@@ -90,8 +90,8 @@ function ActualizarBono() {
         contentType: 'application/json', // Establecer el tipo de contenido como JSON
         data: JSON.stringify(Bono), // Convertir la instancia de la clase a JSON
         success: function (data) {
-            window.alert("Ridiculo");
-            console.log("cobardes");
+
+            window.location.href = "../Bono/TablaBonoViews";
         }
     });
 }

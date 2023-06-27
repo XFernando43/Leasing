@@ -225,12 +225,6 @@ namespace Leasing.Infraestructura.Querys
             note1 = await connection.QuerySingleOrDefaultAsync<LeasingNotes1>("SP_GetLeasingNote1_ID", parameters, commandType: CommandType.StoredProcedure);
             Console.WriteLine(note1.N_Total_de_Cuotas);
 
-            //Consulta 2 
-            DynamicParameters parameters2 = new();
-            parameters2.Add("@Prestamo_ID", 1);
-            note1 = await connection.QuerySingleOrDefaultAsync<LeasingNotes1>("SP_GetLeasingNote1_ID", parameters, commandType: CommandType.StoredProcedure);
-            Console.WriteLine(note1.N_Total_de_Cuotas);
-
             float exponente = (bono.Frecuencia_Pago / bono.N_Dias_Anios);
 
             var result = new List<LeasingTable>();
@@ -280,6 +274,10 @@ namespace Leasing.Infraestructura.Querys
                     {
                         saldofinal = saldoInicialIndexado - interes;
                     }
+                    else
+                    {
+                        saldoInicial = saldoInicialIndexado + amortizacion;
+                    }
                 }
                 //Saldo Indexado
                 saldoInicialIndexado = saldoInicial;
@@ -293,15 +291,23 @@ namespace Leasing.Infraestructura.Querys
                 // COUTA
                 if (i <= note1.N_Total_de_Cuotas)
                 {
-                    if(pg == 'T') { cuota_inc = 0; }
+                    if(pg == 'T') {cuota_inc =
+                           PAGO(tem + note1.Por_Seguro_desgrav, note1.N_Total_de_Cuotas - i + 1, saldoInicialIndexado, 0, 0);
+                    }
                     else if(pg == 'P') { cuota_inc = 0; }
                     else
                     {
+                        Console.WriteLine("TEM: ", tem);
                         cuota_inc =
-                           PAGO(tem + note1.Por_Seguro_desgrav,note1.N_Total_de_Cuotas - saldoInicialIndexado + 1,saldoInicialIndexado,0,0);
+                           PAGO(tem + note1.Por_Seguro_desgrav,note1.N_Total_de_Cuotas - i + 1,saldoInicialIndexado,0,0);
                     }
 
                 } else { cuota_inc = 0; }
+                // AMORTICACION
+                if (i<= note1.N_Total_de_Cuotas)
+                {
+
+                }
 
                 //////////////////////
                 result.Add(new LeasingTable

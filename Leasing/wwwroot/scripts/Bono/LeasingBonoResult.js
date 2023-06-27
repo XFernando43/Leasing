@@ -1,28 +1,10 @@
 ﻿$(document).ready(function () {
     var dsh = {
         init: function () {
-            dsh.RellenarTabla();
             dsh.GetDatosPrestamo();
-            dsh.Calcular_Leasing();
-
-            dsh.Calcular_Datos_Resultantes();
-        },
-        Calcular_Datos_Resultantes() {
-            $('#btn-note1').click(function () {
-                obtenerDatosPrestamo(getId());
-            });
-        },
-        Calcular_Leasing() {
-            $('#btn2').click(function () {
-                ObetenerDatos(getId());
-            });
-        },
-        RellenarTabla() {
-    
         },
         GetDatosPrestamo() {
-            console.log("ACA:");
-            GetLeasingNote1(getId());
+            obtenerDatosPrestamo(getId());
         }
     }
     dsh.init();
@@ -67,138 +49,69 @@ class LeasingNote1 {
     }
 }
 
-function obtenerDatosPrestamo(id) {
+function obtenerDatosPrestamo(id) {  /////////// ACA
     $.getJSON('../getBono/' + id, function (data) {
-        console.log(data.bonos.result);
-        const prestamo = new ClasePrestamo();
-        prestamo.ID = data.bonos.result[0].id;
-        prestamo.PrecioVentaActivo = data.bonos.result[0].precioVentaActivo;
-        prestamo.CuotaInicial = data.bonos.result[0].cuotaInicial;
-        prestamo.N_Anios = data.bonos.result[0].n_Anios;
-        prestamo.Frecuencia_Pago = data.bonos.result[0].frecuencia_Pago;
-        prestamo.N_Dias_Anios = data.bonos.result[0].n_Dias_Anios;
-        prestamo.Costos_Notariales = data.bonos.result[0].costos_Notariales;
-        prestamo.Costes_Registrales = data.bonos.result[0].costes_Registrales;
-        prestamo.Tasacion = data.bonos.result[0].tasacion;
-        prestamo.Comision_Estudio = data.bonos.result[0].comision_Estudio;
-        prestamo.Comision_Activacion = data.bonos.result[0].comision_Activacion;
-        prestamo.Comision_Periodo = data.bonos.result[0].comision_Periodo;
-        prestamo.portes = data.bonos.result[0].portes;
-        prestamo.Gastos_Administracion = data.bonos.result[0].gastos_Administracion;
-        prestamo.Seguro_Degravament = data.bonos.result[0].seguro_Degravament;
-        prestamo.Seguro_Riesgo = data.bonos.result[0].seguro_Riesgo;
-        prestamo.Tasa_Descuento = data.bonos.result[0].tasa_Descuento;
-        prestamo.User_ID = data.bonos.result[0].id;
-        console.log(prestamo);
-        PostLeasingResult1(prestamo);
-        console.log("aca 2");
-        PostLeasingTableResult(prestamo)
+        console.log(data.bonos.result[0]);
+        var prestamo = data.bonos.result[0];
+
+        console.log("Datos del prestamo: ");
+        console.log(prestamo.precioVentaActivo);
+        console.log(prestamo.cuotaInicial);
+        console.log(prestamo.n_Anios);
+        console.log(prestamo.frecuencia_Pago);
+        console.log(prestamo.tasa_Descuento);
+
+        crearTabla(prestamo);
+
     });
 }
 
-function PostLeasingResult1(prestamo_class) {
-    $.ajax({
-        type: 'POST', // Cambiar a POST para enviar los datos en el cuerpo de la solicitud
-        url: '../PostLeasing1',
-        contentType: 'application/json', // Establecer el tipo de contenido como JSON
-        data: JSON.stringify(prestamo_class), // Convertir la instancia de la clase a JSON
-        success: function (data) {
+function crearTabla(Datos) {
+    var pcva = Datos.precioVentaActivo;
+    var ci = Datos.cuotaInicial / 100;
+    var na = Datos.n_Anios;
+    var fp = Datos.frecuencia_Pago;
+    var tasa = Datos.tasa_Descuento;
 
-        }
-    });
+    var cuota = pcva * (1 - ci) * ((tasa * Math.pow(1 + tasa, na * fp)) / (Math.pow(1 + tasa, na * fp) - 1));
+    var saldoInicial = pcva * (1 - ci);
+
+    var tableBody = document.getElementById("Leasing-Table").getElementsByTagName("tbody")[0];
+    tableBody.innerHTML = "";
+
+
+    for (var i = 1; i <= na * fp; i++) {
+        var row = tableBody.insertRow();
+
+        var numeroCuotaCell = row.insertCell(0);
+        numeroCuotaCell.innerHTML = i;
+
+        var tasaCell = row.insertCell(1);
+        tasaCell.innerHTML = tasa.toFixed(2);
+
+        var saldoInicialCell = row.insertCell(2);
+        saldoInicialCell.innerHTML = saldoInicial.toFixed(2);
+
+        var intereses = saldoInicial * tasa;
+        var interesesCell = row.insertCell(3);
+        interesesCell.innerHTML = intereses.toFixed(2);
+
+        var cuotaCell = row.insertCell(4);
+        cuotaCell.innerHTML = cuota.toFixed(2);
+
+        var amortizacion = cuota - intereses;
+        var amortizacionCell = row.insertCell(5);
+        amortizacionCell.innerHTML = amortizacion.toFixed(2);
+
+        var saldoFinal = saldoInicial - amortizacion;
+        var saldoFinalCell = row.insertCell(6);
+        saldoFinalCell.innerHTML = saldoFinal.toFixed(2);
+
+        saldoInicial = saldoFinal;
+
+    }
+
+    var datatable = $('#Leasing-Table').DataTable({ fixedColumns: true, responsive: true });
 }
 
-function GetLeasingNote1(id) {
-    $.getJSON('../getLeasing1/' + id, function (data) {
 
-        console.log(data.note1.result[0]);
-    });
-}
-
-function ObetenerDatos(id) {
-    $.getJSON('../getBono/' + id, function (data) {
-        console.log("funcion 2");
-        const prestamo = new ClasePrestamo();
-        prestamo.ID = data.bonos.result[0].id;
-        prestamo.PrecioVentaActivo = data.bonos.result[0].precioVentaActivo;
-        prestamo.CuotaInicial = data.bonos.result[0].cuotaInicial;
-        prestamo.N_Anios = data.bonos.result[0].n_Anios;
-        prestamo.Frecuencia_Pago = data.bonos.result[0].frecuencia_Pago;
-        prestamo.N_Dias_Anios = data.bonos.result[0].n_Dias_Anios;
-        prestamo.Costos_Notariales = data.bonos.result[0].costos_Notariales;
-        prestamo.Costes_Registrales = data.bonos.result[0].costes_Registrales;
-        prestamo.Tasacion = data.bonos.result[0].tasacion;
-        prestamo.Comision_Estudio = data.bonos.result[0].comision_Estudio;
-        prestamo.Comision_Activacion = data.bonos.result[0].comision_Activacion;
-        prestamo.Comision_Periodo = data.bonos.result[0].comision_Periodo;
-        prestamo.portes = data.bonos.result[0].portes;
-        prestamo.Gastos_Administracion = data.bonos.result[0].gastos_Administracion;
-        prestamo.Seguro_Degravament = data.bonos.result[0].seguro_Degravament;
-        prestamo.Seguro_Riesgo = data.bonos.result[0].seguro_Riesgo;
-        prestamo.Tasa_Descuento = data.bonos.result[0].tasa_Descuento;
-        prestamo.User_ID = data.bonos.result[0].id;
-
-        console.log("Los resultados de la tabla");
-        PostLeasingTableResult(prestamo)
-
-        console.log("ACA se rellena la tabla");
-        LlenarTablaLeasing(prestamo);
-    });
-}
-
-function PostLeasingTableResult(prestamo_class) {
-    $.ajax({
-        type: 'POST', // Cambiar a POST para enviar los datos en el cuerpo de la solicitud
-        url: '../LeasingProcess',
-        contentType: 'application/json', // Establecer el tipo de contenido como JSON
-        data: JSON.stringify(prestamo_class), // Convertir la instancia de la clase a JSON
-        success: function (data) {
-            console.log("data");
-            console.log(data);
-        }
-    });
-}
-
-function LlenarTablaLeasing(prestamo_class) {
-
-    $.ajax({
-        type: 'POST',
-        url: '../LeasingProcess',
-        contentType: 'application/json',
-        data: JSON.stringify(prestamo_class),
-        success: function (data) {
-            $.each(data.leasing.result, function (i, data) {
-
-                var body = "<tr>";
-                // Acciones
-                body += '<td class="mb-auto text-center">' + data.n + '</td>';
-                body += '<td class="mb-auto text-center">' + data.tea + '</td>';
-                body += '<td class="mb-auto text-center">' + data.tem + '</td>';
-                body += '<td class="mb-auto text-center">' + data.ia + '</td>';
-                body += '<td class="mb-auto text-center">' + data.ip + '</td>';
-                body += '<td class="mb-auto text-center">' + data.pg + '</td>';
-                body += '<td class="mb-auto text-center">' + data.saldoInicial + '</td>';
-                body += '<td class="mb-auto text-center">' + data.saldoInicialIndexado + '</td>';
-                body += '<td class="mb-auto text-center">' + data.interes + '</td>';
-                body += '<td class="mb-auto text-center">' + data.cuota + '</td>';
-                body += '<td class="mb-auto text-center">' + data.amort + '</td>';
-                body += '<td class="mb-auto text-center">' + data.prepago + '</td>';
-                body += '<td class="mb-auto text-center">' + data.seguro_Degrav + '</td>';
-                body += '<td class="mb-auto text-center">' + data.seguro_Riesgo + '</td>';
-                body += '<td class="mb-auto text-center">' + data.comision + '</td>';
-                body += '<td class="mb-auto text-center">' + data.portes + '</td>';
-                body += '<td class="mb-auto text-center">' + data.gastosAdm + '</td>';
-                body += '<td class="mb-auto text-center">' + data.saldo_Final + '</td>';
-                body += '<td class="mb-auto text-center">' + data.flujo + '</td>';
-
-                body += "</tr>";
-                $("#Leasing-Table tbody").append(body);
-            });
-        },
-        error: function () {
-            alert('Fail!');
-        }
-    });
-
-
-}

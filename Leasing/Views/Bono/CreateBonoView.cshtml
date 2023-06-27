@@ -1,129 +1,78 @@
-﻿    @{
+﻿@{
     ViewData["Title"] = "CreateBonoView";
 }
 
 <script src="~/scripts/Bono/CrearBono.js"></script>
+<script src="~/scripts/Bono/TablaBonos.js"></script>
 
-<h1>CreateBonoView</h1>
+<br />
+<br />
+<br />
 
- 
-<div class="form-group mb-4">
-    <label>Precio de Venta del Activo</label>
-    <input type="number" class="form-control" id="PCVA" value="150000" placeholder="Ingrese el Monto total">
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title text-center">CreateBonoView</h1>
+        <hr />
+        <br />
+        <form>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <label for="PCVA">Precio de Venta del Activo</label>
+                        <input type="number" class="form-control" id="PCVA" value="150000" placeholder="Ingrese el Monto total">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="C_I">% Cuota Inicial</label>
+                        <input type="number" class="form-control" id="C_I" value="20" placeholder="Ingrese el Adelanto">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="N_A">Nº de Años</label>
+                        <input type="number" class="form-control" id="N_A" value="20" placeholder="Ingrese el tiempo en años">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="FP">Frecuencia de pago</label>
+                        <select class="form-control" id="FP">
+                            <option value="12">Mensual</option>
+                            <option value="6">Bimestral</option>
+                            <option value="4">Trimestral</option>
+                            <option value="3">Cuatrimestral</option>
+                            <option value="2">Semestral</option>
+                            <option value="1">Anual</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <label for="Tasa">Tasa</label>
+                        <input type="number" class="form-control" id="Tasa" value="0.05" placeholder="Ingrese la tasa de interés">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="PeriodoGracia">Periodo de Gracia</label>
+                        <select class="form-control" id="PeriodoGracia" onchange="mostrarNumeroPeriodos()">
+                            <option value="0">No</option>
+                            <option value="1">Total</option>
+                            <option value="2">Parcial</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4" id="DivNumeroPeriodos" style="display: none;">
+                        <label for="NumeroPeriodos">Número de Periodos de Gracia</label>
+                        <input type="number" class="form-control" id="NumeroPeriodos" placeholder="Ingrese el número de periodos">
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-end">
+                <a id="ButtonCreate" class="btn btn-success" onclick="crearTabla()">Create</a>
+                <div></div> <!-- Espacio vacío para alinear a la derecha -->
+            </div>
+        </form>
+    </div>
 </div>
+        
 
-<div class="form-group mb-4">
-    <label>
-        % Cuota Inicial
-    </label>
-    <input type="number" class="form-control" id="C_I" value="20" placeholder="Ingrese el Monto total">
-</div>
-
-<div class="form-group mb-4">
-    <label>
-        Nº de Años
-    </label>
-    <input type="number"  class="form-control" id="N_A" value="20" placeholder="Ingrese el Adelanto">
-</div>
-
-<div class="form-group mb-4">
-    <label>
-        Frecuencia de pago
-    </label>
-    <input type="number" class="form-control" id="FP" value="30" placeholder="Ingrese el Monto Desembolsado">
-</div>
-
-<div class="form-group mb-4">
-    <label>
-        Nº de días por año || aca no jala
-    </label>
-    <input type="number" class="form-control" id="NDXA" value="360" placeholder="Ingrese el Monto Desembolsado">
-</div>
-
-<!-- <<<<<<<< -->
-
-<div class="form-group mb-4">
-    <label>
-        Costes Notariales
-    </label>
-    <input type="number" class="form-control" id="Cost_N" value="150" placeholder="Ingrese la Tasa">
-</div>
-
-<div class="form-group mb-4">
-    <label>
-        Costes Registrales
-    </label>
-    <input type="number" class="form-control" id="C_R" value="250" placeholder="Ingrese el Tiempo Periodo de Gracia">
-</div>
-
-
-<div class="form-group mb-4">
-    <label>
-        Tasación
-    </label>
-    <input type="number" class="form-control" id="Tasacion" value="100" placeholder="Ingrese el Tiempo de Prestamo">
-</div>
-
-<div class="form-group mb-4">
-    <label>
-        Comisión de estudio
-    </label>
-    <input type="number" class="form-control" id="C_E" value="50" placeholder="Ingrese la tasa de seguro degravamen">
-</div>
-
-<div class="form-group mb-4">
-    <label>
-        Comisión activación
-    </label>
-    <input type="number" class="form-control" id="C_A" value="0" placeholder="Ingrese la tasa de seguro de Inmueble">
-</div>
-
-
-<!-- <<<<<<<< -->
-
-
-<div class="form-group mb-4">
-    <label>
-        Comisión periodica
-    </label>
-    <input type="number" class="form-control" id="Com_Pe" value="0" placeholder="Ingrese la tasa de seguro de Inmueble">
-</div>
-
-<div class="form-group mb-4">
-    <label>
-        Portes
-    </label>
-    <input type="number" class="form-control" id="Portes" value="4" placeholder="Ingrese la tasa de seguro de Inmueble">
-</div>
-
-<div class="form-group mb-4">
-    <label>
-        Gastos de Administración
-    </label>
-    <input type="number" class="form-control" id="GA_AD" value="0" placeholder="Ingrese la tasa de seguro de Inmueble">
-</div>
-
-<div class="form-group mb-4">
-    <label>
-        % de Seguro desgravamen
-    </label>
-    <input type="number" class="form-control" id="S_DV" value="0.05" placeholder="Ingrese la tasa de seguro de Inmueble">
-</div>
-
-<div class="form-group mb-4">
-    <label>
-        % de Seguro riesgo
-    </label>
-    <input type="number" class="form-control" id="S_R" value="0.03" placeholder="Ingrese la tasa de seguro de Inmueble">
-</div>
-
-<div class="form-group mb-4">
-    <label>
-        Tasa de Descuento
-    </label>
-    <input type="number" class="form-control" id="T_D" value="25" placeholder="Ingrese la tasa de seguro de Inmueble">
-</div>
-
-
-<a id="ButtonCreate" class="btn btn-success ">Create</a>
-<a id="ButtonTest" class="btn btn-danger ">Test</a>
