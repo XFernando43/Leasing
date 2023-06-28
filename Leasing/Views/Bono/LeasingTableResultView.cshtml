@@ -33,7 +33,7 @@
         <div class="col-md-4" style="margin-left: 50px; width: 600px; height: 1500px; margin-top: 50px;">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Gráfico de Ejemplo</h5>
+                    <h5 class="card-title">Finanzas</h5>
                     <canvas id="chart"></canvas>
                 </div>
             </div>
@@ -46,12 +46,12 @@
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Etiqueta 1', 'Etiqueta 2', 'Etiqueta 3', 'Etiqueta 4', 'Etiqueta 5'],
+            labels: ['PC1', 'TP', 'EP', 'ED', 'TF'],
             datasets: [{
-                label: 'Datos de ejemplo',
-                data: [12, 19, 3, 5, 2],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                label: 'Probabilidades de aprobar el curso',
+                data: [15, 17, 14, 13, 20],
+                backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2), rgba(41, 214, 47, 0.8)'],
+                borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(153, 102, 255),rgb(222, 13, 232)'],
                 borderWidth: 1
             }]
         },

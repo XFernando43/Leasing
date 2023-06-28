@@ -10,7 +10,7 @@ namespace Leasing.Infraestructura
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IPrestamoQuery, PrestamoQuery>();
-
+            services.AddTransient<ILoginQuery, LoginQuery>();
             return services;
         }
     }

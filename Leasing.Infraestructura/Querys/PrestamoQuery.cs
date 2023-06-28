@@ -53,6 +53,27 @@ namespace Leasing.Infraestructura.Querys
             }
         }
 
+        public async Task crearPrestamoDatos(PrestamoRequest request)
+        {
+            using var connection = new SqlConnection(ConnectionString);
+            DynamicParameters param = new();
+            param.Add("@tipoMoneda", request.tipo_Moneda);
+            param.Add("@Precio_V", request.precioVentaActivo);
+            param.Add("@Cuota_I", request.cuota_inicial);
+            param.Add("@N_anios", request.n_Anios);
+            param.Add("@Frecuencia_Pa", request.frecuencia_Pago);
+            param.Add("@Tasa", request.tasa);
+
+            param.Add("@Tipo_Tasa", request.tipo_Tasa);
+            param.Add("@Frecuencia_Tasa", request.frecuencia_tasa);
+            param.Add("@periodo_gracia", request.periodo_gracia);
+            param.Add("@n_periodos_gracia", request.n_periodos_gracia);
+            param.Add("@User_Id", request.User_ID);
+            param.Add("@Periodo_Capi", request.periodo_Capitalización);
+
+            connection.Query
+                ("SP_InsertPrestamoDatos", param, commandType: CommandType.StoredProcedure);
+        }
         public async Task CreatePrestamo(BonoRequest request)
         {
             using var connection = new SqlConnection(ConnectionString);
@@ -76,35 +97,6 @@ namespace Leasing.Infraestructura.Querys
             param.Add("@Seguro_Riesgo", request.Seguro_Riesgo);
             param.Add("@Tasa_Descuento", request.Tasa_Descuento);
             param.Add("@User_ID", 1);
-
-            connection.Query
-                ("InsertarPrestamo", param, commandType: CommandType.StoredProcedure);
-        }
-
-        public void CreatePrestamo2()
-        {
-            using var connection = new SqlConnection(ConnectionString);
-            DynamicParameters param = new();
-
-            param.Add("@PrecioVentaActivo", 15000);
-            param.Add("@CuotaInicial", 20);
-            param.Add("@N_Anios", 20);
-            param.Add("@Frecuencia_Pago", 20);
-            param.Add("@N_Dias_Anios", 20);
-
-            param.Add("@Costos_Notariales", 20);
-            param.Add("@Costes_Registrales", 20);
-            param.Add("@Tasacion", 20);
-            param.Add("@Comision_Estudio", 20);
-            param.Add("@Comision_Activacion", 20);
-
-            param.Add("@Comision_Periodo", 20);
-            param.Add("@Portes", 20);
-            param.Add("@Gastos_Administracion", 20);
-            param.Add("@Seguro_Degravament", 20);
-            param.Add("@Seguro_Riesgo", 20);
-            param.Add("@Tasa_Descuento", 20);
-            param.Add("@@User_ID", 1);
 
             connection.Query
                 ("InsertarPrestamo", param, commandType: CommandType.StoredProcedure);
@@ -136,12 +128,29 @@ namespace Leasing.Infraestructura.Querys
 
         }
 
+        public async Task<IEnumerable<Prestamos>> getPrestamosDatos()
+        {
+            using var connection = new SqlConnection(ConnectionString);
+            DynamicParameters param = new();
+            return await connection.QueryAsync<Prestamos>
+            ("SP_GetPrestamoDatos", param, commandType: CommandType.StoredProcedure);
+
+        }
+
         public async Task<IEnumerable<Bono>> GetPrestamoID(int id)
         {
             using var connection = new SqlConnection(ConnectionString);
             DynamicParameters parameters = new();
             parameters.Add("@Id", id);
             return await connection.QueryAsync<Bono>("SP_GetPrestamoId", parameters, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<Prestamos>> getPrestamosDatosID(int id)
+        {
+            using var connection = new SqlConnection(ConnectionString);
+            DynamicParameters parameters = new();
+            parameters.Add("@id", id);
+            return await connection.QueryAsync<Prestamos>("SP_GetPrestamoDatosById", parameters, commandType: CommandType.StoredProcedure);
         }
 
         public async Task<IEnumerable<LeasingNotes1>> getFinancingNote1_ID(int id)
@@ -324,5 +333,6 @@ namespace Leasing.Infraestructura.Querys
             return await Task.FromResult<IEnumerable<LeasingTable>>(result);
         }
 
+        
     }
 }

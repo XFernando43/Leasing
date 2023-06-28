@@ -40,14 +40,14 @@ namespace Leasing.Controllers
         }
 
         /// endPoints
-        [Route("CreateBono5555")]
-        public IActionResult CreateBonoAPI()
+
+        [Route("CreatePrestamo")] // este nuevo
+        public IActionResult CrearPrestamoDatos([FromBody] PrestamoRequest request)
         {
             try
             {
-
-                _BonoQuery.CreatePrestamo2();
-
+                Console.WriteLine(request.ToJson());
+                _BonoQuery.crearPrestamoDatos(request);
                 return Ok(new
                 {
                     status = true,
@@ -64,7 +64,6 @@ namespace Leasing.Controllers
                 });
             }
         }
-
 
         [Route("CreateBono")]
         public IActionResult CreateBonoAPI([FromBody] BonoRequest request)
@@ -112,6 +111,34 @@ namespace Leasing.Controllers
                 });
             }
         }
+
+
+        [Route("getPrestamos")]
+        public IActionResult getPrestamos()
+        {
+            try
+            {
+                var prestamos = _BonoQuery.getPrestamosDatos();
+                return Ok(new
+                {
+                    status = true,
+                    Prestamos = prestamos
+                });
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new
+                {
+                    status = false,
+                    messsage = ex.Message
+                });
+            }
+        }
+
+
+
+
         [Route("getBono/{id}")]
         public IActionResult getBonioId(int id)
         {
@@ -134,6 +161,30 @@ namespace Leasing.Controllers
                 });
             }
         }
+
+        [Route("getPrestamos/{id}")]
+        public IActionResult getPrestamoID(int id)
+        {
+            try
+            {
+                var prestamo = _BonoQuery.getPrestamosDatosID(id);
+                return Ok(new
+                {
+                    status = true,
+                    Prestamo = prestamo
+                });
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new
+                {
+                    status = false,
+                    messsage = ex.Message
+                });
+            }
+        }
+
         [Route("UpdateBono")]
         public IActionResult UpdateBono([FromBody] BonoRequest request)
         {

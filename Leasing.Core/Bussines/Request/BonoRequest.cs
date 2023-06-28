@@ -29,7 +29,6 @@ namespace Leasing.Core.Bussines.Request
         public float Tasa_Descuento { get; set; }
         public int User_ID { get; set; }
 
-        //public int ID_Arrendatario { get; set; }
-        //public int ID_Entidad { get; set; }
+      
     }
 }

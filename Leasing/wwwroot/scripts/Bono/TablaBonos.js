@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     var dsh = {
         init: function () {
+            welcom();
             dsh.getBonos();
             dsh.getBonosHttp(getId());
             dsh.ButtonAgregar();
@@ -9,10 +10,10 @@
             $(document).ready(function () {
                 $.ajax({
                     type: 'GET',
-                    url: '../GetBonos/' + id,
+                    url: '../getPrestamos/' + id,
                     mimeType: 'json',
                     success: function (data) {
-                        $.each(data.bonos.result, function (i, data) {
+                        $.each(data.prestamos.result, function (i, data) {
                             var body = "<tr>";
 
                             //aciones 
@@ -24,10 +25,11 @@
 
                             body += '<td class="mb-auto text-center">' + data.id + '</td>';
                             body += '<td class="mb-auto text-center">' + data.precioVentaActivo + '</td>';
-                            body += '<td class="mb-auto text-center">' + data.cuotaInicial + '</td>';
+                            body += '<td class="mb-auto text-center">' + data.cuota_inicial + '</td>';
                             body += '<td class="mb-auto text-center">' + data.n_Anios + '</td>';
                             body += '<td class="mb-auto text-center">' + data.frecuencia_Pago + '</td>';
-                            body += '<td class="mb-auto text-center">' + data.tasa_Descuento + '</td>'; 
+                            body += '<td class="mb-auto text-center">' + data.tasa + '</td>'; 
+                            body += '<td class="mb-auto text-center">' + data.periodo_Capitalización + '</td>'; 
                             
                             body += "</tr>";
                             $("#table-Bonos tbody").append(body);
@@ -43,8 +45,8 @@
 
         },
         getBonos() {
-            $.getJSON('../GetBonos', function (data) {
-                console.log(data.bonos.result);
+            $.getJSON('../getPrestamos', function (data) {
+                console.log(data);
             });
         },
         ButtonAgregar() {
@@ -72,3 +74,8 @@ function ButtonCrearPrestamo() {
 function ButtonRedirigirTablaLeasing(id) {
     window.location.href = "/Bono/LeasingTableResultView?id=" + id;
 }
+
+
+function welcom() {
+    toastr.success('¡Bienvenido Logeo Exitoso!');
+}            

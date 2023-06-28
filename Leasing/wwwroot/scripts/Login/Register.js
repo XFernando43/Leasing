@@ -18,16 +18,45 @@
     dsh.init();
 });
 
-function getId() {
-    var id = $('#Id_container').text();
-    return id;
-}
-
 function ButtonRedirigirLogin() {
     window.location.href = "/Login/LoginView";
 }
 
 function ButtonRedigirRegister() {
-    window.location.href = "/Login/RegisterView";
-    //window.alert("COMas");
+    createUser();
 }
+
+function createUser() {
+    var userData = {
+        ID:1,
+        Name: $('#name').val(),
+        LastName: $('#lastName').val(),
+        Email: $('#Email').val(),
+        Password: $('#Password').val(),
+        Telefono: $('#telefono').val(),
+    };
+
+    var edad = $('#Edad').val();
+    if (edad < 18 || edad == null) {
+        toastr.error('¡Debes ser mayor de edad!');
+        toastr.error('¡Usuario no creado!');
+
+    } else {
+        $.ajax({
+            type: 'POST',
+            url: '../CreateUser',
+            contentType: 'application/json',
+            data: JSON.stringify(userData),
+            success: function (data) {
+                console.log(data);
+                toastr.success('¡Usuario creado con éxito!');
+            },
+            error: function () {
+                toastr.error('¡Usuario no creado!');
+            }
+        })
+    }
+    console.log(edad);
+
+}
+
